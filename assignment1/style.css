@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Jersey+10+Charted:regular);
+
 body{
   background-color: rgb(211, 62, 62);
   padding: 20px;
@@ -15,5 +17,8 @@ body{
     color: rgb(182, 192, 67);
     
   }
+
+  /*  One of the main reasons for this particular styling was to pick a colour choice which would be in line with the webpage I had chosen to review. The artist used a similar colour theme in the webpage which added to the quality of user interactivity. At the same time, I was careful to choose colours which would not hurt the users eyes and would not cause an unpleasant experience.  
+  I have added padding to headers and the entire body of the webpage to create clean layout which will make it easier for any user to read the content on this page. */ 
 
   
