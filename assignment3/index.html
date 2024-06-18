@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Website with Hover Interaction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="menu">
+            <div class="menu-item">Categories
+                <div class="dropdown">
+                    <a href="#">Electronics</a>
+                    <a href="#">Clothing</a>
+                    <a href="#">Home & Kitchen</a>
+                    <a href="#">Sports</a>
+                    <a href="#">Books</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="product-grid">
+        <div class="product" data-name="Product 1" data-price="$19.99" data-description="A stylish, casual slim-fit T-shirt.">
+            <img src="img2.jpg" alt="img2">
+            <div class="product-info">
+                <h3>Product 1</h3>
+                <p>Price: $19.99</p>
+                <p>Description: A stylish, casual slim-fit T-shirt.</p>
+            </div>
+        </div>
+        <div class="product" data-name="Product 2" data-price="$29.99" data-description="A cool blue full sleeves formal shirt.">
+            <img src="img3.jpg" alt="img3">
+            <div class="product-info">
+                <h3>Product 2</h3>
+                <p>Price: $29.99</p>
+                <p>Description: A cool blue full sleeves formal shirt.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!--
+    My goal was to create a user experience which would aid the user to easily browse the products and get a description of the product without having to go to a different page. This tailored interactivity experience was designed to increase engagement and enhance user experience while interacting with the page. This interaction is designed for a fast fashion shopping website with a focus on the hover function. 
+Design Choices and Context Explanation
+1. Colour Scheme and Visual Hierarchy:
+•	Header and Navigation:
+o	A dark background with white text creates a strong visual contrast, making the menu easy to distinguish and also adds a level of sophistication to the page.
+o	On hover, the background becomes slightly lighter, giving the user clear visual feedback.
+•	Dropdown Menu:
+o	The dropdown menu has a background colour matching the hover state of the menu item, maintaining a consistent colour theme.
+o	Links within the dropdown brighten further on hover, indicating interactivity.
+•	Product Grid:
+o	Products are displayed on a light background with white product containers, ensuring focus on the product images and information.
+2. Hover Interactivity:
+•	Menu Hover:
+o	When the user hovers over a menu item, the dropdown appears seamlessly, providing a list of product categories.
+o	This interaction guides the user to explore different parts of the website without overwhelming them.
+•	Product Hover:
+o	Product images scale up slightly on hover, and the product info panel slides up from the bottom with a fade-in effect.
+o	This ensures that the user can quickly get more information about the product without navigating away or clicking.
+3. Responsive Design:
+•	Flexbox Layout:
+o	Both the menu and product grid utilize Flexbox for responsive alignment.
+o	This ensures that the layout adapts well to different screen sizes, providing a consistent experience across all devices.
+4. JavaScript Enhancements:
+•	Dynamic Content Update:
+o	JavaScript is used to dynamically update the product information on hover.
+o	This keeps the HTML code clean and allows for easier updates when product information changes, enhancing maintainability.
+Challenges and Future Implementation
+1.	Performance Optimization:
+o	As the number of products and menu items grows, performance may be impacted.
+o	Implementing lazy loading for images and optimizing the JavaScript can help maintain smooth interactions.
+2.	Accessibility:
+o	Ensuring full accessibility involves adding ARIA roles and making sure all interactive elements are keyboard navigable.
+o	This would make the site usable for a broader audience, including those with disabilities.
+3.	Enhanced Features:
+o	Search Functionality: Adding a search bar in the header for quick product searches.
+o	User Accounts and Personalization: Allowing users to create accounts and receive personalized recommendations.
+o	Advanced Animations: Implementing more sophisticated animations for a richer user experience, such as transitions between product categories or animations for adding products to the cart.
+
+
+-->
