@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="It Couldn't Be Done by Edgar Albert Guest.">
+  <title>It Couldn't Be Done - Poetry Haven</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-size: 16px;
+      --line-height: 1.6;
+      --primary-bg: #f8f1e9;
+      --primary-text: #2d2d2d;
+      --secondary-bg: #ffffff;
+      --accent-color: #3b3f66;
+      --border-color: #e0d8ce;
+    }
+
+    [data-theme="dark"] {
+      --primary-bg: #1c2526;
+      --primary-text: #e0e0e0;
+      --secondary-bg: #2a3439;
+      --accent-color: #a8b2d1;
+      --border-color: #4a4a4a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      background-color: var(--primary-bg);
+      color: var(--primary-text);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .poem-text {
+      white-space: pre-wrap;
+      font-size: calc(var(--font-size) * 1.1);
+    }
+
+    .focus-visible {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      z-index: 1000;
+    }
+
+    nav a, button {
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      nav a, button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link px-4 py-2 absolute top-0 left-0 transform -translate-y-full focus:translate-y-0 transition-transform">Skip to Content</a>
+
+  <header class="bg-secondary-bg py-6 shadow-sm">
+    <nav class="container mx-auto

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A curated collection of timeless poems, presented with elegance and accessibility.">
-  <title>Poetry Haven</title>
+  <meta name="description" content="The Road Not Taken by Robert Frost.">
+  <title>The Road Not Taken - Poetry Haven</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -35,28 +35,18 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    h1, h2, h3, h4 {
+    h1, h2, h3 {
       font-family: 'Playfair Display', serif;
-    }
-
-    .poem-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid var(--border-color);
-    }
-
-    .poem-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .focus-visible {
-      outline: 3px solid var(--accent-color);
-      outline-offset: 2px;
     }
 
     .poem-text {
       white-space: pre-wrap;
       font-size: calc(var(--font-size) * 1.1);
+    }
+
+    .focus-visible {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
     }
 
     .skip-link {
@@ -70,7 +60,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .poem-card, .poem-card:hover, nav a, button {
+      nav a, button {
         transition: none;
       }
     }
@@ -81,10 +71,10 @@
 
   <header class="bg-secondary-bg py-6 shadow-sm">
     <nav class="container mx-auto px-6 flex justify-between items-center">
-      <h1 class="text-3xl font-bold"><a href="index.html" class="hover:text-accent-color focus-visible">Poetry Haven</a></h1>
+      <h1 class="text-3xl font-bold"><a href="../index.html" class="hover:text-accent-color focus-visible">Poetry Haven</a></h1>
       <ul class="flex space-x-6">
-        <li><a href="index.html" class="text-lg hover:text-accent-color focus-visible" aria-current="page">Home</a></li>
-        <li><a href="collection.html" class="text-lg hover:text-accent-color focus-visible">Collection</a></li>
+        <li><a href="../index.html" class="text-lg hover:text-accent-color focus-visible">Home</a></li>
+        <li><a href="../collection.html" class="text-lg hover:text-accent-color focus-visible">Collection</a></li>
       </ul>
       <div class="flex space-x-3">
         <button id="theme-toggle" aria-label="Toggle dark mode" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">Theme</button>
@@ -95,22 +85,38 @@
   </header>
 
   <main id="main-content" class="container mx-auto px-6 py-12" tabindex="-1">
-    <section aria-labelledby="home-title">
-      <h2 id="home-title" class="text-5xl font-bold text-center mb-6">Poetry Haven</h2>
-      <p class="text-lg text-center max-w-2xl mx-auto mb-12">A sanctuary for timeless poetry, where words weave stories and emotions, crafted with elegance and accessibility for all.</p>
-      <h3 class="text-3xl font-semibold mb-6">Featured Poem: Invictus</h3>
-      <div class="poem-card bg-secondary-bg p-8 rounded-lg">
-        <h4 class="text-2xl font-bold">Invictus</h4>
-        <p class="text-sm opacity-80 mb-4">By William Ernest Henley</p>
+    <section aria-labelledby="poem-title">
+      <h2 id="poem-title" class="text-5xl font-bold mb-6">The Road Not Taken</h2>
+      <p class="text-sm opacity-80 mb-6">By Robert Frost</p>
+      <div class="bg-secondary-bg p-8 rounded-lg border border-border-color">
         <p class="poem-text">
-Out of the night that covers me,
-Black as the pit from pole to pole,
-I thank whatever gods may be
-For my unconquerable soul.
-...
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
         </p>
-        <a href="poems/invictus.html" class="text-accent-color hover:underline focus-visible mt-4 inline-block">Read Full Poem</a>
       </div>
+      <h3 class="text-3xl font-semibold mt-12 mb-6">Background Information</h3>
+      <p>Published in 1916, "The Road Not Taken" by Robert Frost explores choice and individuality. Often misinterpreted as a celebration of nonconformity, it reflects the ambiguity and complexity of decisions.</p>
     </section>
   </main>
 
