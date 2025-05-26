@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poem | Poetic Visions</title>
+    <style>
+        /* Copy all CSS from your index.html */
+        /* ... paste ALL CSS from your index.html here ... */
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@open-dyslexic/font@1.0.0/open-dyslexic.css">
+</head>
+<body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <a href="index.html" class="logo">Poetic Visions</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="Menu">☰</button>
+            <nav aria-label="Main navigation">
+                <ul id="main-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="collection.html">Collection</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb navigation" class="breadcrumbs container">
+        <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collection.html">Collection</a></li>
+            <li aria-current="page">Poem</li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <div class="container">
+            <div class="poem-detail">
+                <!-- Content will be loaded by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <!-- Same footer as collection.html -->
+        </div>
+    </footer>
+
+    <script>
+        // Poem Data (same as in index.html and collection.html)
+        const poems = [
+            // Include ALL poems here
+        ];
+
+        // Load the poem based on URL parameter
+        function loadPoem() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const poemId = urlParams.get('id');
+            const poem = poems.find(p => p.id === poemId);
+            
+            if (poem) {
+                document.title = `${poem.title} | Poetic Visions`;
+                
+                // Update breadcrumb
+                document.querySelector('.breadcrumbs li:last-child').textContent = poem.title;
+                
+                const poemDetail = document.querySelector('.poem-detail');
+                poemDetail.innerHTML = `
+                    <h1>${poem.title}</h1>
+                    <h2>${poem.author} (${poem.year})</h2>
+                    <div class="poem-text">${poem.text}</div>
+                    <div class="poem-info">
+                        <h3>About This Poem</h3>
+                        <p>${poem.background}</p>
+                    </div>
+                    <div class="poem-tools">
+                        <button id="read-poem" class="btn">Read Aloud</button>
+                        <button id="stop-reading" class="btn" style="display:none;">Stop Reading</button>
+                        <a href="collection.html" class="btn">Back to Collection</a>
+                    </div>
+                `;
+                
+                // Set up text-to-speech
+                const readBtn = document.getElementById('read-poem');
+                const stopBtn = document.getElementById('stop-reading');
+                let speechSynth = window.speechSynthesis;
+                
+                readBtn.addEventListener('click', () => {
+                    const utterance = new SpeechSynthesisUtterance(poem.text);
+                    utterance.rate = 0.9;
+                    speechSynth.speak(utterance);
+                    readBtn.style.display = 'none';
+                    stopBtn.style.display = 'inline-block';
+                });
+                
+                stopBtn.addEventListener('click', () => {
+                    speechSynth.cancel();
+                    stopBtn.style.display = 'none';
+                    readBtn.style.display = 'inline-block';
+                });
+            } else {
+                // Poem not found
+                document.querySelector('.poem-detail').innerHTML = `
+                    <h1>Poem Not Found</h1>
+                    <p>The requested poem could not be found.</p>
+                    <a href="collection.html" class="btn">Back to Collection</a>
+                `;
+            }
+        }
+
+        // Navigation Toggle (same as collection.html)
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('#main-nav');
+
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('active');
+        });
+
+        // Initialize accessibility tools (same as collection.html)
+        // ...
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPoem();
+            initAccessibility();
+        });
+    </script>
+</body>
+</html>
