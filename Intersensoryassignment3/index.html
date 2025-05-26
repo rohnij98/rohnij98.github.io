@@ -26,6 +26,14 @@
       --border-color: #4a4a4a;
     }
 
+    [data-contrast="high"] {
+      --primary-bg: #000000;
+      --primary-text: #ffffff;
+      --secondary-bg: #1a1a1a;
+      --accent-color: #ffffff;
+      --border-color: #ffffff;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       font-size: var(--font-size);
@@ -49,6 +57,15 @@
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
+    [data-motion="reduced"] .poem-card,
+    [data-motion="reduced"] .poem-card:hover,
+    [data-motion="reduced"] nav a,
+    [data-motion="reduced"] button {
+      transition: none;
+      transform: none;
+      box-shadow: none;
+    }
+
     .focus-visible {
       outline: 3px solid var(--accent-color);
       outline-offset: 2px;
@@ -65,36 +82,66 @@
       z-index: 1000;
     }
 
-    nav a, button {
+    nav a, button, select {
       transition: color 0.2s ease, background-color 0.2s ease;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .poem-card, .poem-card:hover, nav a, button {
-        transition: none;
-      }
+    .tooltip {
+      transition: opacity 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    button:hover + .tooltip, button:focus + .tooltip,
+    select:hover + .tooltip, select:focus + .tooltip {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link px-4 py-2 absolute top-0 left-0 transform -translate-y-full focus:translate-y-0 transition-transform">Skip to Content</a>
 
-  <header class="bg-secondary-bg py-6 shadow-sm">
-    <nav class="container mx-auto px-6 flex justify-between items-center">
+  <header role="banner" class="bg-secondary-bg py-6 shadow-sm">
+    <nav role="navigation" class="container mx-auto px-6 flex justify-between items-center">
       <h1 class="text-3xl font-bold"><a href="index.html" class="hover:text-accent-color focus-visible">Poetry Haven</a></h1>
       <ul class="flex space-x-6">
         <li><a href="index.html" class="text-lg hover:text-accent-color focus-visible" aria-current="page">Home</a></li>
         <li><a href="collection.html" class="text-lg hover:text-accent-color focus-visible">Collection</a></li>
       </ul>
-      <div class="flex space-x-3">
-        <button id="theme-toggle" aria-label="Toggle dark mode" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">Theme</button>
-        <button id="font-increase" aria-label="Increase font size" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">+</button>
-        <button id="font-decrease" aria-label="Decrease font size" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">-</button>
+      <div class="flex space-x-3 relative">
+        <div class="relative">
+          <select id="language-select" aria-label="Select language" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">
+            <option value="en" selected>English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+          </select>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Choose your preferred language</span>
+        </div>
+        <div class="relative">
+          <button id="theme-toggle" aria-label="Toggle dark mode" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">Theme</button>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Switch between light and dark mode</span>
+        </div>
+        <div class="relative">
+          <button id="high-contrast-toggle" aria-label="Toggle high contrast mode" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">Contrast</button>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Toggle high contrast mode</span>
+        </div>
+        <div class="relative">
+          <button id="motion-toggle" aria-label="Toggle animations" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">Motion</button>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Toggle animations on or off</span>
+        </div>
+        <div class="relative">
+          <button id="font-increase" aria-label="Increase font size" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">+</button>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Increase font size</span>
+        </div>
+        <div class="relative">
+          <button id="font-decrease" aria-label="Decrease font size" class="px-3 py-1 bg-accent-color text-white rounded-md hover:bg-opacity-90 focus-visible">-</button>
+          <span class="tooltip hidden absolute bg-gray-800 text-white text-sm px-2 py-1 rounded mt-2">Decrease font size</span>
+        </div>
       </div>
     </nav>
   </header>
 
-  <main id="main-content" class="container mx-auto px-6 py-12" tabindex="-1">
+  <main id="main-content" role="main" class="container mx-auto px-6 py-12" tabindex="-1">
     <section aria-labelledby="home-title">
       <h2 id="home-title" class="text-5xl font-bold text-center mb-6">Poetry Haven</h2>
       <p class="text-lg text-center max-w-2xl mx-auto mb-12">A sanctuary for timeless poetry, where words weave stories and emotions, crafted with elegance and accessibility for all.</p>
@@ -147,16 +194,38 @@ For my unconquerable soul.
     </section>
   </main>
 
-  <footer class="bg-secondary-bg py-6">
+  <footer role="contentinfo" class="bg-secondary-bg py-6">
     <p class="text-center text-sm opacity-80">© 2025 Poetry Haven. All rights reserved.</p>
   </footer>
 
   <script>
+    // Focus Management
+    function returnFocusToMain() {
+      document.getElementById('main-content').focus();
+    }
+
     // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
       document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
       localStorage.setItem('theme', document.body.dataset.theme);
+      returnFocusToMain();
+    });
+
+    // High Contrast Toggle
+    const highContrastToggle = document.getElementById('high-contrast-toggle');
+    highContrastToggle.addEventListener('click', () => {
+      document.body.dataset.contrast = document.body.dataset.contrast === 'high' ? 'normal' : 'high';
+      localStorage.setItem('contrast', document.body.dataset.contrast);
+      returnFocusToMain();
+    });
+
+    // Motion Toggle
+    const motionToggle = document.getElementById('motion-toggle');
+    motionToggle.addEventListener('click', () => {
+      document.body.dataset.motion = document.body.dataset.motion === 'reduced' ? 'normal' : 'reduced';
+      localStorage.setItem('motion', document.body.dataset.motion);
+      returnFocusToMain();
     });
 
     // Font Size Adjustment
@@ -172,6 +241,7 @@ For my unconquerable soul.
       document.documentElement.style.setProperty('--line-height', lineHeight);
       localStorage.setItem('fontSize', fontSize);
       localStorage.setItem('lineHeight', lineHeight);
+      returnFocusToMain();
     });
 
     fontDecrease.addEventListener('click', () => {
@@ -182,18 +252,39 @@ For my unconquerable soul.
         document.documentElement.style.setProperty('--line-height', lineHeight);
         localStorage.setItem('fontSize', fontSize);
         localStorage.setItem('lineHeight', lineHeight);
+        returnFocusToMain();
       }
+    });
+
+    // Language Selection
+    const languageSelect = document.getElementById('language-select');
+    languageSelect.addEventListener('change', (e) => {
+      const lang = e.target.value;
+      localStorage.setItem('language', lang);
+      console.log(`Language changed to: ${lang}`);
+      returnFocusToMain();
     });
 
     // Load saved preferences
     if (localStorage.getItem('theme')) {
       document.body.dataset.theme = localStorage.getItem('theme');
     }
+    if (localStorage.getItem('contrast')) {
+      document.body.dataset.contrast = localStorage.getItem('contrast');
+    }
+    if (localStorage.getItem('motion')) {
+      document.body.dataset.motion = localStorage.getItem('motion');
+    } else if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.body.dataset.motion = 'reduced';
+    }
     if (localStorage.getItem('fontSize')) {
       fontSize = parseFloat(localStorage.getItem('fontSize'));
       lineHeight = parseFloat(localStorage.getItem('lineHeight'));
       document.documentElement.style.setProperty('--font-size', `${fontSize}px`);
       document.documentElement.style.setProperty('--line-height', lineHeight);
+    }
+    if (localStorage.getItem('language')) {
+      languageSelect.value = localStorage.getItem('language');
     }
 
     // Keyboard Navigation for Menu and Poem Links
