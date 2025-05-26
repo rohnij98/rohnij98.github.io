@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetic Visions | Classic Poetry Collection</title>
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary-color: #6d435a;
+            --secondary-color: #f1f7ed;
+            --accent-color: #b3679b;
+            --text-color: #333;
+            --bg-color: #f9f4f5;
+            --card-bg: #fff;
+            --font-main: 'Cormorant Garamond', serif;
+            --font-heading: 'Playfair Display', serif;
+            --font-size-base: 1.1rem;
+            --line-height-base: 1.6;
+            --transition: all 0.3s ease;
+            
+            /* Dark mode variables */
+            --dark-primary: #9b6a8b;
+            --dark-secondary: #1a1a2e;
+            --dark-accent: #d4a5c4;
+            --dark-text: #e6e6e6;
+            --dark-bg: #16213e;
+            --dark-card-bg: #0f3460;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] {
+            --primary-color: var(--dark-primary);
+            --secondary-color: var(--dark-secondary);
+            --accent-color: var(--dark-accent);
+            --text-color: var(--dark-text);
+            --bg-color: var(--dark-bg);
+            --card-bg: var(--dark-card-bg);
+        }
+
+        /* Accessibility Focus Styles */
+        *:focus {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
+        }
+
+        /* Skip to Content Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 8px;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: var(--font-main);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-color);
+        }
+
+        /* Layout */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--secondary-color);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        nav a:hover:after, nav a:focus:after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            animation: fadeIn 2s ease;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover, .btn:focus {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Featured Poem */
+        .featured-poem {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 3rem auto;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            animation: slideUp 1s ease;
+        }
+
+        .featured-poem:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .featured-poem h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .featured-poem h3 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .poem-content {
+            white-space: pre-line;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Collection Page */
+        .collection-header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .collection-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .poem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .poem-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .poem-card:hover, .poem-card:focus-within {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .poem-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .poem-card-content {
+            padding: 1.5rem;
+        }
+
+        .poem-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .poem-card p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Poem Detail Page */
+        .poem-detail {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .poem-detail h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .poem-detail h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .poem-text {
+            white-space: pre-line;
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+        }
+
+        .poem-info {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .poem-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            margin: 0 1rem;
+        }
+
+        .accessibility-tools {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .accessibility-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .accessibility-btn:hover, .accessibility-btn:focus {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-toggle {
+                display: block;
+                margin-top: 1rem;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .poem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility Classes */
+        .large-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+
+        .extra-spacing {
+            letter-spacing: 1px;
+            word-spacing: 3px;
+            line-height: 2;
+        }
+
+        .high-contrast {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #ff0;
+            --text-color: #000;
+            --bg-color: #fff;
+            --card-bg: #fff;
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .accessibility-tools {
+                display: none;
+            }
+
+            body {
+                background-color: white;
+                color: black;
+                font-size: 12pt;
+            }
+
+            .poem-detail, .featured-poem, .poem-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Skip to Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <a href="index.html" class="logo">Poetic Visions</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="Menu">☰</button>
+            <nav>
+                <ul id="main-nav">
+                    <li><a href="index.html" aria-current="page">Home</a></li>
+                    <li><a href="collection.html">Collection</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Homepage Content -->
+        <section class="hero">
+            <div class="container">
+                <h1>Discover Timeless Poetry</h1>
+                <p>Explore classic poems that have inspired generations with their beauty and wisdom</p>
+                <a href="collection.html" class="btn">Browse Collection</a>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="featured-poem">
+                <h2>Featured Poem</h2>
+                <h3>Invictus</h3>
+                <p class="poem-content">Out of the night that covers me,
+Black as the pit from pole to pole,
+I thank whatever gods may be
+For my unconquerable soul.
+
+In the fell clutch of circumstance
+I have not winced nor cried aloud.
+Under the bludgeonings of chance
+My head is bloody, but unbowed.
+
+Beyond this place of wrath and tears
+Looms but the Horror of the shade,
+And yet the menace of the years
+Finds and shall find me unafraid.
+
+It matters not how strait the gate,
+How charged with punishments the scroll,
+I am the master of my fate,
+I am the captain of my soul.</p>
+                <p><strong>William Ernest Henley</strong></p>
+            </div>
+        </section>
+
+        <!-- Collection Page (hidden by default) -->
+        <section id="collection-page" style="display: none;">
+            <div class="collection-header">
+                <h1>Poetry Collection</h1>
+                <p>Browse our selection of classic poems</p>
+            </div>
+            <div class="container">
+                <div class="poem-grid">
+                    <!-- Poem cards will be generated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Poem Detail Page (hidden by default) -->
+        <section id="poem-detail-page" style="display: none;">
+            <div class="container">
+                <div class="poem-detail">
+                    <!-- Poem content will be loaded by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">Poetic Visions</div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="collection.html">Collection</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p>&copy; 2023 Poetic Visions. All rights reserved.</p>
+            <div class="accessibility-tools">
+                <button class="accessibility-btn" id="theme-toggle">Toggle Dark Mode</button>
+                <button class="accessibility-btn" id="font-increase">Increase Font</button>
+                <button class="accessibility-btn" id="font-decrease">Decrease Font</button>
+                <button class="accessibility-btn" id="toggle-spacing">Toggle Spacing</button>
+                <button class="accessibility-btn" id="high-contrast">High Contrast</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation Toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('#main-nav');
+
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('active');
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme') || 
+                            (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        if (currentTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = 'Toggle Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            let theme;
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                theme = 'light';
+                themeToggle.textContent = 'Toggle Dark Mode';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                theme = 'dark';
+                themeToggle.textContent = 'Toggle Light Mode';
+            }
+            localStorage.setItem('theme', theme);
+        });
+
+        // Font Size Adjustment
+        const fontIncrease = document.getElementById('font-increase');
+        const fontDecrease = document.getElementById('font-decrease');
+        const html = document.documentElement;
+        let fontSize = parseFloat(getComputedStyle(html).fontSize);
+
+        fontIncrease.addEventListener('click', () => {
+            fontSize = Math.min(fontSize + 2, 24);
+            html.style.fontSize = fontSize + 'px';
+            document.body.classList.add('large-text');
+        });
+
+        fontDecrease.addEventListener('click', () => {
+            fontSize = Math.max(fontSize - 2, 14);
+            html.style.fontSize = fontSize + 'px';
+            if (fontSize <= 16) {
+                document.body.classList.remove('large-text');
+            }
+        });
+
+        // Letter Spacing Toggle
+        const toggleSpacing = document.getElementById('toggle-spacing');
+        toggleSpacing.addEventListener('click', () => {
+            document.body.classList.toggle('extra-spacing');
+        });
+
+        // High Contrast Toggle
+        const highContrast = document.getElementById('high-contrast');
+        highContrast.addEventListener('click', () => {
+            document.body.classList.toggle('high-contrast');
+        });
+
+        // Poem Data
+        const poems = [
+            {
+                id: 'invictus',
+                title: 'Invictus',
+                author: 'William Ernest Henley',
+                year: '1875',
+                text: `Out of the night that covers me,
+Black as the pit from pole to pole,
+I thank whatever gods may be
+For my unconquerable soul.
+
+In the fell clutch of circumstance
+I have not winced nor cried aloud.
+Under the bludgeonings of chance
+My head is bloody, but unbowed.
+
+Beyond this place of wrath and tears
+Looms but the Horror of the shade,
+And yet the menace of the years
+Finds and shall find me unafraid.
+
+It matters not how strait the gate,
+How charged with punishments the scroll,
+I am the master of my fate,
+I am the captain of my soul.`,
+                background: 'Written in 1875 while Henley was in the hospital recovering from the amputation of his leg due to tuberculosis, this poem reflects his indomitable spirit in the face of adversity.'
+            },
+            {
+                id: 'road-not-taken',
+                title: 'The Road Not Taken',
+                author: 'Robert Frost',
+                year: '1916',
+                text: `Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.`,
+                background: 'Often misinterpreted as a celebration of individualism, Frost himself said this poem was "tricky" and about his friend Edward Thomas who would regret whichever path they took on walks.'
+            },
+            {
+                id: 'do-not-go-gentle',
+                title: 'Do Not Go Gentle Into That Good Night',
+                author: 'Dylan Thomas',
+                year: '1951',
+                text: `Do not go gentle into that good night,
+Old age should burn and rave at close of day;
+Rage, rage against the dying of the light.
+
+Though wise men at their end know dark is right,
+Because their words had forked no lightning they
+Do not go gentle into that good night.
+
+Good men, the last wave by, crying how bright
+Their frail deeds might have danced in a green bay,
+Rage, rage against the dying of the light.
+
+Wild men who caught and sang the sun in flight,
+And learn, too late, they grieved it on its way,
+Do not go gentle into that good night.
+
+Grave men, near death, who see with blinding sight
+Blind eyes could blaze like meteors and be gay,
+Rage, rage against the dying of the light.
+
+And you, my father, there on the sad height,
+Curse, bless, me now with your fierce tears, I pray.
+Do not go gentle into that good night.
+Rage, rage against the dying of the light.`,
+                background: 'Thomas wrote this villanelle for his dying father, though his father passed away before it was published. The poem explores the universal struggle against death.'
+            },
+            {
+                id: 'the-tyger',
+                title: 'The Tyger',
+                author: 'William Blake',
+                year: '1794',
+                text: `Tyger Tyger, burning bright,
+In the forests of the night;
+What immortal hand or eye,
+Could frame thy fearful symmetry?
+
+In what distant deeps or skies.
+Burnt the fire of thine eyes?
+On what wings dare he aspire?
+What the hand, dare seize the fire?
+
+And what shoulder, & what art,
+Could twist the sinews of thy heart?
+And when thy heart began to beat,
+What dread hand? & what dread feet?
+
+What the hammer? what the chain,
+In what furnace was thy brain?
+What the anvil? what dread grasp,
+Dare its deadly terrors clasp?
+
+When the stars threw down their spears
+And water'd heaven with their tears:
+Did he smile his work to see?
+Did he who made the Lamb make thee?
+
+Tyger Tyger burning bright,
+In the forests of the night:
+What immortal hand or eye,
+Dare frame thy fearful symmetry?`,
+                background: 'Published in Blake\'s "Songs of Experience," this poem contrasts with "The Lamb" from his "Songs of Innocence," exploring the duality of creation through the fearsome tiger.'
+            },
+            {
+                id: 'dream-within-a-dream',
+                title: 'A Dream Within A Dream',
+                author: 'Edgar Allan Poe',
+                year: '1849',
+                text: `Take this kiss upon the brow!
+And, in parting from you now,
+Thus much let me avow —
+You are not wrong, who deem
+That my days have been a dream;
+Yet if hope has flown away
+In a night, or in a day,
+In a vision, or in none,
+Is it therefore the less gone?
+All that we see or seem
+Is but a dream within a dream.
+
+I stand amid the roar
+Of a surf-tormented shore,
+And I hold within my hand
+Grains of the golden sand —
+How few! yet how they creep
+Through my fingers to the deep,
+While I weep — while I weep!
+O God! Can I not grasp
+Them with a tighter clasp?
+O God! can I not save
+One from the pitiless wave?
+Is all that we see or seem
+But a dream within a dream?`,
+                background: 'One of Poe\'s most philosophical poems, it questions the nature of reality and our ability to distinguish between dreams and waking life.'
+            },
+            {
+                id: 'dont-quit',
+                title: 'Don\'t Quit',
+                author: 'John Greenleaf Whittier / Unknown',
+                year: 'Unknown',
+                text: `When things go wrong, as they sometimes will,
+When the road you're trudging seems all uphill,
+When the funds are low and the debts are high,
+And you want to smile, but you have to sigh,
+When care is pressing you down a bit,
+Rest, if you must, but don't you quit.
+
+Life is queer with its twists and turns,
+As every one of us sometimes learns,
+And many a failure turns about,
+When he might have won had he stuck it out;
+Don't give up though the pace seems slow—
+You may succeed with another blow.
+
+Success is failure turned inside out—
+The silver tint of the clouds of doubt,
+And you never can tell how close you are,
+It may be near when it seems so far;
+So stick to the fight when you're hardest hit—
+It's when things seem worst that you must not quit.`,
+                background: 'The authorship of this inspirational poem is disputed, sometimes attributed to Edgar A. Guest or John Greenleaf Whittier, but its exact origins remain unknown.'
+            },
+            {
+                id: 'it-couldnt-be-done',
+                title: 'It Couldn\'t Be Done',
+                author: 'Edgar Albert Guest',
+                year: '1917',
+                text: `Somebody said that it couldn't be done,
+But he with a chuckle replied
+That "maybe it couldn't," but he would be one
+Who wouldn't say so till he'd tried.
+So he buckled right in with the trace of a grin
+On his face. If he worried he hid it.
+He started to sing as he tackled the thing
+That couldn't be done, and he did it.
+
+Somebody scoffed: "Oh, you'll never do that;
+At least no one ever has done it";
+But he took off his coat and he took off his hat,
+And the first thing we knew he'd begun it.
+With a lift of his chin and a bit of a grin,
+Without any doubting or quiddit,
+He started to sing as he tackled the thing
+That couldn't be done, and he did it.
+
+There are thousands to tell you it cannot be done,
+There are thousands to prophesy failure;
+There are thousands to point out to you one by one,
+The dangers that wait to assail you.
+But just buckle in with a bit of a grin,
+Just take off your coat and go to it;
+Just start to sing as you tackle the thing
+That "cannot be done," and you'll do it.`,
+                background: 'Guest, known as "the people\'s poet," wrote this motivational poem during World War I, embodying the can-do spirit of the era.'
+            }
+        ];
+
+        // Generate Poem Cards for Collection Page
+        function generatePoemCards() {
+            const poemGrid = document.querySelector('.poem-grid');
+            
+            poems.forEach(poem => {
+                const card = document.createElement('div');
+                card.className = 'poem-card';
+                card.tabIndex = 0;
+                card.setAttribute('role', 'article');
+                card.innerHTML = `
+                    <img src="https://source.unsplash.com/random/300x200/?${encodeURIComponent(poem.title.split(' ')[0])},poetry" alt="${poem.title} by ${poem.author}">
+                    <div class="poem-card-content">
+                        <h3>${poem.title}</h3>
+                        <p>${poem.author} (${poem.year})</p>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => showPoemDetail(poem.id));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        showPoemDetail(poem.id);
+                    }
+                });
+                
+                poemGrid.appendChild(card);
+            });
+        }
+
+        // Show Poem Detail
+        function showPoemDetail(poemId) {
+            const poem = poems.find(p => p.id === poemId);
+            if (!poem) return;
+            
+            const poemDetail = document.querySelector('.poem-detail');
+            poemDetail.innerHTML = `
+                <h1>${poem.title}</h1>
+                <h2>${poem.author} (${poem.year})</h2>
+                <div class="poem-text">${poem.text}</div>
+                <div class="poem-info">
+                    <h3>About This Poem</h3>
+                    <p>${poem.background}</p>
+                </div>
+                <button onclick="showCollection()" class="btn" style="margin-top: 2rem;">Back to Collection</button>
+            `;
+            
+            document.getElementById('collection-page').style.display = 'none';
+            document.getElementById('poem-detail-page').style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show Collection
+        function showCollection() {
+            document.getElementById('collection-page').style.display = 'block';
+            document.getElementById('poem-detail-page').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize based on URL
+        function initPage() {
+            const path = window.location.pathname;
+            const hash = window.location.hash.substr(1);
+            
+            if (path.includes('collection.html') || hash === 'collection') {
+                document.getElementById('collection-page').style.display = 'block';
+                document.querySelector('main').style.display = 'none';
+                generatePoemCards();
+                
+                // Check if we're linking directly to a poem
+                const poemMatch = hash.match(/^poem-(.+)$/);
+                if (poemMatch) {
+                    showPoemDetail(poemMatch[1]);
+                }
+            } else if (hash === 'poem-detail') {
+                const poemId = new URLSearchParams(window.location.search).get('id');
+                if (poemId) {
+                    showPoemDetail(poemId);
+                }
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', initPage);
+
+        // Make functions available globally for navigation
+        window.showPoemDetail = showPoemDetail;
+        window.showCollection = showCollection;
+    </script>
+</body>
+</html>
