@@ -112,6 +112,39 @@ For my unconquerable soul.
         <a href="poems/invictus.html" class="text-accent-color hover:underline focus-visible mt-4 inline-block">Read Full Poem</a>
       </div>
     </section>
+    <section aria-labelledby="collection-title" class="mt-16">
+      <h3 id="collection-title" class="text-3xl font-semibold text-center mb-8">Explore Our Collection</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <a href="poems/invictus.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">Invictus</h4>
+          <p class="text-sm opacity-80">William Ernest Henley</p>
+        </a>
+        <a href="poems/road-not-taken.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">The Road Not Taken</h4>
+          <p class="text-sm opacity-80">Robert Frost</p>
+        </a>
+        <a href="poems/do-not-go-gentle.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">Do Not Go Gentle into That Good Night</h4>
+          <p class="text-sm opacity-80">Dylan Thomas</p>
+        </a>
+        <a href="poems/tyger.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">The Tyger</h4>
+          <p class="text-sm opacity-80">William Blake</p>
+        </a>
+        <a href="poems/dream-within.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">A Dream Within a Dream</h4>
+          <p class="text-sm opacity-80">Edgar Allan Poe</p>
+        </a>
+        <a href="poems/dont-quit.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">Don't Quit</h4>
+          <p class="text-sm opacity-80">John Greenleaf Whittier / Unknown</p>
+        </a>
+        <a href="poems/it-couldnt-be-done.html" class="poem-card bg-secondary-bg p-6 rounded-lg focus-visible">
+          <h4 class="text-xl font-bold">It Couldn't Be Done</h4>
+          <p class="text-sm opacity-80">Edgar Albert Guest</p>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer class="bg-secondary-bg py-6">
@@ -163,8 +196,8 @@ For my unconquerable soul.
       document.documentElement.style.setProperty('--line-height', lineHeight);
     }
 
-    // Keyboard Navigation for Menu
-    const navLinks = document.querySelectorAll('nav a');
+    // Keyboard Navigation for Menu and Poem Links
+    const navLinks = document.querySelectorAll('nav a, .poem-card');
     navLinks.forEach(link => {
       link.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
