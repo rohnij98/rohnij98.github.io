@@ -1,723 +1,394 @@
 <!DOCTYPE html>
-<html lang="en" id="lang-attribute">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetic Visions | Classic Poetry Collection</title>
-    <style>
-        /* Base Styles & Variables */
-        :root {
-            --primary-color: #6d435a;
-            --secondary-color: #f1f7ed;
-            --accent-color: #b3679b;
-            --text-color: #333;
-            --bg-color: #f9f4f5;
-            --card-bg: #fff;
-            --font-main: 'Cormorant Garamond', serif;
-            --font-heading: 'Playfair Display', serif;
-            --font-size-base: 1.1rem;
-            --line-height-base: 1.6;
-            --transition: all 0.3s ease;
-            
-            /* Dark mode variables */
-            --dark-primary: #9b6a8b;
-            --dark-secondary: #1a1a2e;
-            --dark-accent: #d4a5c4;
-            --dark-text: #e6e6e6;
-            --dark-bg: #16213e;
-            --dark-card-bg: #0f3460;
-
-            /* High contrast variables */
-            --hc-primary: #000;
-            --hc-secondary: #fff;
-            --hc-accent: #ff0;
-            --hc-text: #000;
-            --hc-bg: #fff;
-            --hc-card-bg: #fff;
-        }
-
-        /* Dark mode */
-        [data-theme="dark"] {
-            --primary-color: var(--dark-primary);
-            --secondary-color: var(--dark-secondary);
-            --accent-color: var(--dark-accent);
-            --text-color: var(--dark-text);
-            --bg-color: var(--dark-bg);
-            --card-bg: var(--dark-card-bg);
-        }
-
-        /* High contrast mode */
-        .high-contrast {
-            --primary-color: var(--hc-primary);
-            --secondary-color: var(--hc-secondary);
-            --accent-color: var(--hc-accent);
-            --text-color: var(--hc-text);
-            --bg-color: var(--hc-bg);
-            --card-bg: var(--hc-card-bg);
-        }
-
-        /* Reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        /* Dyslexia-friendly mode */
-        .dyslexia-mode {
-            font-family: 'OpenDyslexic', sans-serif;
-            letter-spacing: 0.1em;
-            line-height: 1.8;
-        }
-
-        /* Simplified view */
-        .simplified-view {
-            --font-main: 'Arial', sans-serif;
-            
-            * {
-                background-image: none !important;
-            }
-            
-            .poem-card, .featured-poem, .poem-detail {
-                border: 1px solid #ddd !important;
-                box-shadow: none !important;
-            }
-            
-            .hero {
-                background: var(--primary-color) !important;
-            }
-        }
-
-        /* Accessibility Focus Styles */
-        *:focus {
-            outline: 3px solid var(--accent-color);
-            outline-offset: 3px;
-        }
-
-        :focus-visible {
-            outline: 3px solid var(--accent-color);
-            outline-offset: 3px;
-            box-shadow: 0 0 0 6px rgba(179, 103, 155, 0.3);
-        }
-
-        /* Skip to Content Link */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 8px;
-            z-index: 100;
-            transition: var(--transition);
-        }
-
-        .skip-link:focus {
-            top: 0;
-        }
-
-        /* Visually hidden helper */
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Base Styles */
-        body {
-            font-family: var(--font-main);
-            font-size: var(--font-size-base);
-            line-height: var(--line-height-base);
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            margin-top: 0;
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        a:hover, a:focus {
-            color: var(--accent-color);
-        }
-
-        /* Layout */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--secondary-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav li {
-            margin-left: 1.5rem;
-        }
-
-        nav a {
-            color: var(--secondary-color);
-            font-weight: 500;
-            position: relative;
-        }
-
-        nav a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--secondary-color);
-            transition: var(--transition);
-        }
-
-        nav a:hover:after, nav a:focus:after {
-            width: 100%;
-        }
-
-        /* Breadcrumbs */
-        .breadcrumbs {
-            padding: 1rem 0;
-            font-size: 0.9rem;
-        }
-
-        .breadcrumbs ol {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .breadcrumbs li {
-            margin-right: 0.5rem;
-        }
-
-        .breadcrumbs li:after {
-            content: '›';
-            margin-left: 0.5rem;
-            color: var(--primary-color);
-        }
-
-        .breadcrumbs li:last-child:after {
-            content: '';
-        }
-
-        .breadcrumbs [aria-current="page"] {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .simplified-view .hero {
-            background: var(--primary-color) !important;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeIn 1.5s ease;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            animation: fadeIn 2s ease;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .btn:hover, .btn:focus {
-            background-color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Featured Poem */
-        .featured-poem {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 3rem auto;
-            max-width: 800px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            animation: slideUp 1s ease;
-        }
-
-        .featured-poem:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .featured-poem h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .featured-poem h3 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .poem-content {
-            white-space: pre-line;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            text-align: center;
-        }
-
-        /* Collection Page */
-        .collection-header {
-            text-align: center;
-            padding: 3rem 0;
-        }
-
-        .collection-header h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-        }
-
-        .poem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        .poem-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .poem-card:hover, .poem-card:focus-within {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .poem-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .poem-card-content {
-            padding: 1.5rem;
-        }
-
-        .poem-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .poem-card p {
-            color: var(--text-color);
-            opacity: 0.8;
-            margin-bottom: 1rem;
-        }
-
-        /* Poem Detail Page */
-        .poem-detail {
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 2rem;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .poem-detail h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .poem-detail h2 {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .poem-text {
-            white-space: pre-line;
-            font-size: 1.2rem;
-            line-height: 2;
-            margin-bottom: 2rem;
-        }
-
-        .poem-info {
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-
-        .poem-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* Modal Dialog */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 90%;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-links {
-            display: flex;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer-links a {
-            color: var(--secondary-color);
-            margin: 0 1rem;
-        }
-
-        .accessibility-tools {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .accessibility-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--secondary-color);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .accessibility-btn:hover, .accessibility-btn:focus {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Feedback Button */
-        .feedback-btn {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-        }
-
-        /* WCAG Badge */
-        .wcag-badge {
-            position: fixed;
-            bottom: 1rem;
-            left: 1rem;
-            background: white;
-            padding: 0.5rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .nav-toggle {
-                display: block;
-                margin-top: 1rem;
-            }
-
-            nav ul {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            nav li {
-                margin: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .poem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .accessibility-tools {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            header, footer, .accessibility-tools, .feedback-btn, .wcag-badge {
-                display: none;
-            }
-
-            body {
-                background-color: white;
-                color: black;
-                font-size: 12pt;
-            }
-
-            .poem-detail, .featured-poem, .poem-card {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                page-break-inside: avoid;
-            }
-
-            .poem-detail::after {
-                content: "This document meets WCAG 2.1 AA accessibility standards. For the full interactive experience, visit our website at poetic-visions.com";
-                display: block;
-                margin-top: 2rem;
-                font-size: 0.8rem;
-                color: #666;
-            }
-        }
-
-        /* Accessibility Classes */
-        .large-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-        }
-
-        .extra-spacing {
-            letter-spacing: 1px;
-            word-spacing: 3px;
-            line-height: 2;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <!-- OpenDyslexic font -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@open-dyslexic/font@1.0.0/open-dyslexic.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Poetry Collection</title>
+<style>
+  :root {
+    --font-family: 'Georgia', serif;
+    --color-bg-light: #f7f3f2;
+    --color-text-light: #1c1c1c;
+    --color-bg-dark: #121212;
+    --color-text-dark: #e4e4e4;
+    --color-highlight: #e07b39;
+    --color-link: #1565c0;
+    --color-link-hover: #0b3a91;
+    --max-width: 900px;
+    --transition-speed: 0.3s;
+    --default-font-size: 18px;
+    --default-line-height: 1.6;
+    --default-letter-spacing: 0.02em;
+  }
+
+  /* Reset & base styles */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-family);
+    margin: 0;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-light);
+    font-size: var(--default-font-size);
+    line-height: var(--default-line-height);
+    letter-spacing: var(--default-letter-spacing);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+  }
+
+  body.dark {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    color: var(--color-link-hover);
+    outline: none;
+  }
+
+  h1, h2, h3, h4 {
+    margin-top: 0;
+    margin-bottom: 0.4em;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Container */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1rem 1rem 3rem;
+  }
+
+  /* Accessibility controls container */
+  #accessibility-controls {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--color-highlight);
+    color: white;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 1000;
+  }
+  #accessibility-controls label {
+    cursor: pointer;
+    user-select: none;
+  }
+  #accessibility-controls select {
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    padding: 0.1rem 0.3rem;
+  }
+  #accessibility-controls button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    user-select: none;
+    transition: color var(--transition-speed);
+  }
+  #accessibility-controls button:hover,
+  #accessibility-controls button:focus {
+    color: #ffcb8f;
+    outline: none;
+  }
+
+  /* Skip to content link */
+  #skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background-color: var(--color-highlight);
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 10000;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    transition: top 0.3s ease-in-out;
+  }
+  #skip-link:focus {
+    top: 0;
+    outline: 3px solid #fff;
+  }
+
+  /* Header and nav */
+  header {
+    background: var(--color-highlight);
+    color: white;
+    padding: 1rem 1rem;
+  }
+
+  nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    gap: 1rem;
+  }
+  nav ul li {
+  }
+
+  nav a {
+    color: white;
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+  }
+  nav a:hover, nav a:focus {
+    background-color: rgba(255, 255, 255, 0.25);
+    outline: none;
+  }
+
+  /* Main content area */
+  main {
+    margin-top: 1rem;
+  }
+
+  /* Homepage */
+  #homepage h1 {
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+
+  #homepage p.mission {
+    max-width: 30rem;
+    margin: 0 auto 2rem auto;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-highlight);
+  }
+
+  #featured-poem {
+    background: var(--color-highlight);
+    color: white;
+    padding: 1rem 1.2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(224,123,57,.4);
+    font-style: italic;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--transition-speed);
+  }
+  #featured-poem:hover, #featured-poem:focus {
+    background-color: #c8641b;
+    outline: none;
+  }
+
+  /* Collection page grid */
+  #collection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 1.6rem;
+  }
+
+  .poem-card {
+    background: var(--color-highlight);
+    color: white;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgb(224 123 57 / 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-speed);
+  }
+  .poem-card:hover, .poem-card:focus {
+    background-color: #c8641b;
+    outline: none;
+  }
+  .poem-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.3rem;
+    text-align: center;
+  }
+  .poem-author {
+    font-style: italic;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  /* Dedicated poem page */
+  #poem-page {
+    max-width: 700px;
+    margin: 1rem auto 4rem;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    background: var(--color-highlight);
+    color: white;
+    box-shadow: 0 0 14px rgb(224 123 57 / 0.8);
+  }
+  #poem-page h2 {
+    margin-bottom: 0.2rem;
+  }
+  #poem-page h3 {
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 0;
+  }
+  #poem-text {
+    white-space: pre-wrap;
+    margin: 1rem 0 1.6rem 0;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  #poem-background {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.35;
+    font-style: italic;
+    border-top: 1px solid rgba(255 255 255 / 0.5);
+    padding-top: 1rem;
+  }
+
+  /* Buttons */
+  button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    background-color: #e07b39;
+    color: white;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+  }
+  button:hover, button:focus {
+    background-color: #c8641b;
+    outline: none;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    #collection {
+      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    }
+  }
+
+  /* Focus visible for keyboard users */
+  :focus-visible {
+    outline: 3px solid var(--color-highlight);
+    outline-offset: 2px;
+  }
+</style>
 </head>
 <body>
-    <!-- Skip to Content Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- WCAG Compliance Badge -->
-    <div class="wcag-badge" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="40" viewBox="0 0 80 40">
-            <rect width="80" height="40" fill="#2B579A" rx="5"/>
-            <text x="40" y="25" font-family="Arial" font-size="14" fill="white" text-anchor="middle">WCAG 2.1 AA</text>
-        </svg>
+<a href="#main-content" id="skip-link">Skip to content</a>
+<header role="banner">
+  <nav role="navigation" aria-label="Main Navigation">
+    <ul>
+      <li><a href="#" id="nav-home" tabindex="0">Home</a></li>
+      <li><a href="#" id="nav-collection" tabindex="0">Poem Collection</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main-content" tabindex="-1" role="main" aria-live="polite">
+  <!-- Homepage -->
+  <section id="homepage" aria-label="Homepage">
+    <div class="container">
+      <h1>Poetry Collection</h1>
+      <p class="mission">Sharing timeless poems that inspire, uplift, and move the soul.</p>
+      <article id="featured-poem" role="button" tabindex="0" aria-pressed="false" aria-label="Featured poem: Invictus, read more" >
+        <blockquote>
+          "Out of the night that covers me,<br />
+          Black as the pit from pole to pole,<br />
+          I thank whatever gods may be<br />
+          For my unconquerable soul."
+        </blockquote>
+        <footer>— Invictus by William Ernest Henley</footer>
+      </article>
     </div>
+  </section>
 
-    <!-- Feedback Button -->
-    <button id="a11y-feedback" class="feedback-btn" aria-label="Provide accessibility feedback">
-        <span aria-hidden="true">♿</span>
-        <span class="visually-hidden">Accessibility Feedback</span>
-    </button>
+  <!-- Collection Page -->
+  <section id="collection-page" aria-label="Poem Collection" hidden>
+    <div class="container">
+      <h2>Poem Collection</h2>
+      <div id="collection" aria-live="polite" aria-relevant="additions removals">
+        <!-- Dynamically populated poem cards -->
+      </div>
+    </div>
+  </section>
 
-    <!-- Header -->
-    <header>
-        <div class="header-container container">
-            <a href="index.html" class="logo">Poetic Visions</a>
-            <button class="nav-toggle" aria-expanded="false" aria-label="Menu">☰</button>
-            <nav aria-label="Main navigation">
-                <ul id="main-nav">
-                    <li><a href="index.html" aria-current="page">Home</a></li>
-                    <li><a href="collection.html">Collection</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- Dedicated Poem Page -->
+  <section id="poem-page" aria-label="Poem text and information" hidden>
+    <div class="container">
+      <button id="back-to-collection" aria-label="Back to poem collection">&larr; Back to collection</button>
+      <h2 id="poem-title"></h2>
+      <h3 id="poem-author"></h3>
+      <article id="poem-text" tabindex="0" aria-label="Poem text"></article>
+      <section id="poem-background" aria-label="Poem background information"></section>
+    </div>
+  </section>
+</main>
 
-    <!-- Breadcrumbs -->
-    <nav aria-label="Breadcrumb navigation" class="breadcrumbs container">
-        <ol>
-            <li><a href="index.html">Home</a></li>
-            <li aria-current="page">Current Page</li>
-        </ol>
-    </nav>
+<!-- Accessibility Controls -->
+<div id="accessibility-controls" aria-label="Accessibility controls">
+  <label for="font-size-selector">Font size:</label>
+  <select id="font-size-selector" aria-controls="main-content">
+    <option value="16px">Small</option>
+    <option value="18px" selected>Medium</option>
+    <option value="20px">Large</option>
+    <option value="22px">Extra Large</option>
+  </select>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Homepage Content -->
-        <section class="hero">
-            <div class="container">
-                <h1>Discover Timeless Poetry</h1>
-                <p>Explore classic poems that have inspired generations with their beauty and wisdom</p>
-                <a href="collection.html" class="btn">Browse Collection</a>
-            </div>
-        </section>
+  <label for="line-spacing-selector">Line spacing:</label>
+  <select id="line-spacing-selector" aria-controls="main-content">
+    <option value="1.3">Tight</option>
+    <option value="1.6" selected>Normal</option>
+    <option value="1.8">Relaxed</option>
+    <option value="2.0">Extra Relaxed</option>
+  </select>
 
-        <section class="container">
-            <div class="featured-poem">
-                <h2>Featured Poem</h2>
-                <h3>Invictus</h3>
-                <p class="poem-content">Out of the night that covers me,
+  <button id="toggle-contrast" aria-pressed="false" aria-label="Toggle dark and light mode">🌙</button>
+</div>
+
+<script>
+  // Poems data array with title, author, text, and background info
+  const poems = [
+    {
+      id: "invictus",
+      title: "Invictus",
+      author: "William Ernest Henley",
+      text:
+`Out of the night that covers me,
 Black as the pit from pole to pole,
 I thank whatever gods may be
 For my unconquerable soul.
@@ -730,346 +401,21 @@ My head is bloody, but unbowed.
 Beyond this place of wrath and tears
 Looms but the Horror of the shade,
 And yet the menace of the years
-Finds and shall find me unafraid.
-
-It matters not how strait the gate,
-How charged with punishments the scroll,
-I am the master of my fate,
-I am the captain of my soul.</p>
-                <p><strong>William Ernest Henley</strong></p>
-                <div class="poem-tools">
-                    <button id="read-featured" class="btn">Read Aloud</button>
-                    <button id="stop-reading" class="btn" style="display:none;">Stop Reading</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Collection Page (hidden by default) -->
-        <section id="collection-page" style="display: none;">
-            <div class="collection-header">
-                <h1>Poetry Collection</h1>
-                <p>Browse our selection of classic poems</p>
-            </div>
-            <div class="container">
-                <div class="poem-grid">
-                    <!-- Poem cards will be generated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Poem Detail Page (hidden by default) -->
-        <section id="poem-detail-page" style="display: none;">
-            <div class="container">
-                <div class="poem-detail">
-                    <!-- Poem content will be loaded by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Search Section -->
-        <section id="search-container" class="container" style="margin-top: 3rem;">
-            <form role="search">
-                <label for="search">Search poems</label>
-                <input type="text" id="search" name="search" 
-                       aria-describedby="search-help">
-                <button type="submit" class="btn">Search</button>
-                <p id="search-help" class="visually-hidden">
-                    Press enter to search. Results will appear below.
-                </p>
-            </form>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="logo">Poetic Visions</div>
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="collection.html">Collection</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-                <a href="accessibility.html">Accessibility Statement</a>
-            </div>
-            <p>&copy; 2023 Poetic Visions. All rights reserved.</p>
-            <div class="accessibility-tools">
-                <button class="accessibility-btn" id="theme-toggle">Toggle Dark Mode</button>
-                <button class="accessibility-btn" id="font-increase">Increase Font</button>
-                <button class="accessibility-btn" id="font-decrease">Decrease Font</button>
-                <button class="accessibility-btn" id="toggle-spacing">Toggle Spacing</button>
-                <button class="accessibility-btn" id="high-contrast">High Contrast</button>
-                <button class="accessibility-btn" id="dyslexia-toggle">Dyslexia Mode</button>
-                <button class="accessibility-btn" id="simplified-view">Simplified View</button>
-                <button class="accessibility-btn" id="language-toggle">Español</button>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Navigation Toggle
-        const navToggle = document.querySelector('.nav-toggle');
-        const navMenu = document.querySelector('#main-nav');
-
-        navToggle.addEventListener('click', () => {
-            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-            navToggle.setAttribute('aria-expanded', !isExpanded);
-            navMenu.classList.toggle('active');
-        });
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-        // Check for saved theme preference or use system preference
-        const currentTheme = localStorage.getItem('theme') || 
-                            (prefersDarkScheme.matches ? 'dark' : 'light');
-        
-        if (currentTheme === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = 'Toggle Light Mode';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            let theme;
-            if (document.body.getAttribute('data-theme') === 'dark') {
-                document.body.removeAttribute('data-theme');
-                theme = 'light';
-                themeToggle.textContent = 'Toggle Dark Mode';
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-                theme = 'dark';
-                themeToggle.textContent = 'Toggle Light Mode';
-            }
-            localStorage.setItem('theme', theme);
-        });
-
-        // Font Size Adjustment
-        const fontIncrease = document.getElementById('font-increase');
-        const fontDecrease = document.getElementById('font-decrease');
-        const html = document.documentElement;
-        let fontSize = parseFloat(getComputedStyle(html).fontSize);
-
-        fontIncrease.addEventListener('click', () => {
-            fontSize = Math.min(fontSize + 2, 24);
-            html.style.fontSize = fontSize + 'px';
-            document.body.classList.add('large-text');
-            localStorage.setItem('fontSize', fontSize);
-        });
-
-        fontDecrease.addEventListener('click', () => {
-            fontSize = Math.max(fontSize - 2, 14);
-            html.style.fontSize = fontSize + 'px';
-            if (fontSize <= 16) {
-                document.body.classList.remove('large-text');
-            }
-            localStorage.setItem('fontSize', fontSize);
-        });
-
-        // Check for saved font size
-        const savedFontSize = localStorage.getItem('fontSize');
-        if (savedFontSize) {
-            html.style.fontSize = savedFontSize + 'px';
-            if (savedFontSize > 16) {
-                document.body.classList.add('large-text');
-            }
-        }
-
-        // Letter Spacing Toggle
-        const toggleSpacing = document.getElementById('toggle-spacing');
-        toggleSpacing.addEventListener('click', () => {
-            document.body.classList.toggle('extra-spacing');
-            localStorage.setItem('extraSpacing', document.body.classList.contains('extra-spacing'));
-        });
-
-        // Check for saved spacing preference
-        if (localStorage.getItem('extraSpacing') === 'true') {
-            document.body.classList.add('extra-spacing');
-        }
-
-        // High Contrast Toggle
-        const highContrast = document.getElementById('high-contrast');
-        highContrast.addEventListener('click', () => {
-            document.body.classList.toggle('high-contrast');
-            localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
-        });
-
-        // Check for saved high contrast preference
-        if (localStorage.getItem('highContrast') === 'true') {
-            document.body.classList.add('high-contrast');
-        }
-
-        // Dyslexia Mode Toggle
-        const dyslexiaToggle = document.getElementById('dyslexia-toggle');
-        dyslexiaToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dyslexia-mode');
-            localStorage.setItem('dyslexiaMode', document.body.classList.contains('dyslexia-mode'));
-        });
-
-        // Check for saved dyslexia mode preference
-        if (localStorage.getItem('dyslexiaMode') === 'true') {
-            document.body.classList.add('dyslexia-mode');
-        }
-
-        // Simplified View Toggle
-        const simplifiedView = document.getElementById('simplified-view');
-        simplifiedView.addEventListener('click', () => {
-            document.body.classList.toggle('simplified-view');
-            localStorage.setItem('simplifiedView', document.body.classList.contains('simplified-view'));
-        });
-
-        // Check for saved simplified view preference
-        if (localStorage.getItem('simplifiedView') === 'true') {
-            document.body.classList.add('simplified-view');
-        }
-
-        // Language Toggle
-        const languageToggle = document.getElementById('language-toggle');
-        languageToggle.addEventListener('click', () => {
-            const currentLang = document.documentElement.lang;
-            const newLang = currentLang === 'en' ? 'es' : 'en';
-            document.documentElement.lang = newLang;
-            localStorage.setItem('preferredLang', newLang);
-            languageToggle.textContent = newLang === 'en' ? 'Español' : 'English';
-        });
-
-        // Check for saved language preference
-        const savedLang = localStorage.getItem('preferredLang');
-        if (savedLang) {
-            document.documentElement.lang = savedLang;
-            languageToggle.textContent = savedLang === 'en' ? 'Español' : 'English';
-        }
-
-        // Text-to-Speech Functionality
-        const readFeaturedBtn = document.getElementById('read-featured');
-        const stopReadingBtn = document.getElementById('stop-reading');
-        let speechSynth = window.speechSynthesis;
-
-        readFeaturedBtn.addEventListener('click', () => {
-            const poemText = document.querySelector('.poem-text')?.innerText || 
-                            document.querySelector('.poem-content')?.innerText;
-            if (poemText) {
-                const utterance = new SpeechSynthesisUtterance(poemText);
-                utterance.rate = 0.9;
-                speechSynth.speak(utterance);
-                readFeaturedBtn.style.display = 'none';
-                stopReadingBtn.style.display = 'inline-block';
-            }
-        });
-
-        stopReadingBtn.addEventListener('click', () => {
-            speechSynth.cancel();
-            stopReadingBtn.style.display = 'none';
-            readFeaturedBtn.style.display = 'inline-block';
-        });
-
-        // Timeout Warning
-        let timeoutWarning;
-        const timeoutDuration = 1800000; // 30 minutes
-
-        function resetTimeout() {
-            clearTimeout(timeoutWarning);
-            timeoutWarning = setTimeout(() => {
-                alert('Your session will expire in 2 minutes due to inactivity.');
-            }, timeoutDuration - 120000); // Warn 2 minutes before
-        }
-
-        document.addEventListener('mousemove', resetTimeout);
-        document.addEventListener('keypress', resetTimeout);
-        resetTimeout();
-
-        // Feedback Button
-        document.getElementById('a11y-feedback').addEventListener('click', () => {
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.setAttribute('role', 'dialog');
-            modal.setAttribute('aria-modal', 'true');
-            modal.setAttribute('aria-labelledby', 'feedback-title');
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <button class="close-modal" aria-label="Close dialog">×</button>
-                    <h2 id="feedback-title">Accessibility Feedback</h2>
-                    <p>We're committed to making our website accessible to everyone. Please share your feedback.</p>
-                    <form id="feedback-form">
-                        <label for="feedback-message">Your feedback:</label>
-                        <textarea id="feedback-message" rows="5" required></textarea>
-                        <button type="submit" class="btn">Submit</button>
-                    </form>
-                </div>
-            `;
-            document.body.appendChild(modal);
-            document.querySelector('.close-modal').focus();
-            
-            // Trap focus inside modal
-            trapFocus(modal);
-            
-            // Close modal
-            document.querySelector('.close-modal').addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            // Handle form submission
-            document.getElementById('feedback-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your feedback!');
-                modal.remove();
-            });
-        });
-
-        // Function to trap focus in modal
-        function trapFocus(element) {
-            const focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-
-            element.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey && document.activeElement === first) {
-                        e.preventDefault();
-                        last.focus();
-                    } else if (!e.shiftKey && document.activeElement === last) {
-                        e.preventDefault();
-                        first.focus();
-                    }
-                } else if (e.key === 'Escape') {
-                    element.remove();
-                }
-            });
-        }
-
-        // Poem Data
-        const poems = [
-            {
-                id: 'invictus',
-                title: 'Invictus',
-                author: 'William Ernest Henley',
-                year: '1875',
-                text: `Out of the night that covers me,
-Black as the pit from pole to pole,
-I thank whatever gods may be
-For my unconquerable soul.
-
-In the fell clutch of circumstance
-I have not winced nor cried aloud.
-Under the bludgeonings of chance
-My head is bloody, but unbowed.
-
-Beyond this place of wrath and tears
-Looms but the Horror of the shade,
-And yet the menace of the years
-Finds and shall find me unafraid.
+Finds, and shall find, me unafraid.
 
 It matters not how strait the gate,
 How charged with punishments the scroll,
 I am the master of my fate,
 I am the captain of my soul.`,
-                background: 'Written in 1875 while Henley was in the hospital recovering from the amputation of his leg due to tuberculosis, this poem reflects his indomitable spirit in the face of adversity.'
-            },
-            {
-                id: 'road-not-taken',
-                title: 'The Road Not Taken',
-                author: 'Robert Frost',
-                year: '1916',
-                text: `Two roads diverged in a yellow wood,
+      background:
+      `Written in 1875, "Invictus" is a powerful poem of resilience and determination by William Ernest Henley, who composed it while battling illness. It celebrates the unconquerable spirit and personal mastery over fate despite adversity.`
+    },
+    {
+      id: "road-not-taken",
+      title: "The Road Not Taken",
+      author: "Robert Frost",
+      text:
+`Two roads diverged in a yellow wood,
 And sorry I could not travel both
 And be one traveler, long I stood
 And looked down one as far as I could
@@ -1092,345 +438,16 @@ Somewhere ages and ages hence:
 Two roads diverged in a wood, and I—
 I took the one less traveled by,
 And that has made all the difference.`,
-                background: 'Often misinterpreted as a celebration of individualism, Frost himself said this poem was "tricky" and about his friend Edward Thomas who would regret whichever path they took on walks.'
-            },
-            {
-                id: 'do-not-go-gentle',
-                title: 'Do Not Go Gentle Into That Good Night',
-                author: 'Dylan Thomas',
-                year: '1951',
-                text: `Do not go gentle into that good night,
+      background:
+      `"The Road Not Taken" is Robert Frost's iconic meditation on choices and their consequences. Written in 1916, it uses the metaphor of diverging roads in a forest to reflect on life's decisions and individualism.`
+    },
+    {
+      id: "do-not-go-gentle",
+      title: "Do Not Go Gentle Into That Good Night",
+      author: "Dylan Thomas",
+      text:
+`Do not go gentle into that good night,
 Old age should burn and rave at close of day;
 Rage, rage against the dying of the light.
 
-Though wise men at their end know dark is right,
-Because their words had forked no lightning they
-Do not go gentle into that good night.
-
-Good men, the last wave by, crying how bright
-Their frail deeds might have danced in a green bay,
-Rage, rage against the dying of the light.
-
-Wild men who caught and sang the sun in flight,
-And learn, too late, they grieved it on its way,
-Do not go gentle into that good night.
-
-Grave men, near death, who see with blinding sight
-Blind eyes could blaze like meteors and be gay,
-Rage, rage against the dying of the light.
-
-And you, my father, there on the sad height,
-Curse, bless, me now with your fierce tears, I pray.
-Do not go gentle into that good night.
-Rage, rage against the dying of the light.`,
-                background: 'Thomas wrote this villanelle for his dying father, though his father passed away before it was published. The poem explores the universal struggle against death.'
-            },
-            {
-                id: 'the-tyger',
-                title: 'The Tyger',
-                author: 'William Blake',
-                year: '1794',
-                text: `Tyger Tyger, burning bright,
-In the forests of the night;
-What immortal hand or eye,
-Could frame thy fearful symmetry?
-
-In what distant deeps or skies.
-Burnt the fire of thine eyes?
-On what wings dare he aspire?
-What the hand, dare seize the fire?
-
-And what shoulder, & what art,
-Could twist the sinews of thy heart?
-And when thy heart began to beat,
-What dread hand? & what dread feet?
-
-What the hammer? what the chain,
-In what furnace was thy brain?
-What the anvil? what dread grasp,
-Dare its deadly terrors clasp?
-
-When the stars threw down their spears
-And water'd heaven with their tears:
-Did he smile his work to see?
-Did he who made the Lamb make thee?
-
-Tyger Tyger burning bright,
-In the forests of the night:
-What immortal hand or eye,
-Dare frame thy fearful symmetry?`,
-                background: 'Published in Blake\'s "Songs of Experience," this poem contrasts with "The Lamb" from his "Songs of Innocence," exploring the duality of creation through the fearsome tiger.'
-            },
-            {
-                id: 'dream-within-a-dream',
-                title: 'A Dream Within A Dream',
-                author: 'Edgar Allan Poe',
-                year: '1849',
-                text: `Take this kiss upon the brow!
-And, in parting from you now,
-Thus much let me avow —
-You are not wrong, who deem
-That my days have been a dream;
-Yet if hope has flown away
-In a night, or in a day,
-In a vision, or in none,
-Is it therefore the less gone?
-All that we see or seem
-Is but a dream within a dream.
-
-I stand amid the roar
-Of a surf-tormented shore,
-And I hold within my hand
-Grains of the golden sand —
-How few! yet how they creep
-Through my fingers to the deep,
-While I weep — while I weep!
-O God! Can I not grasp
-Them with a tighter clasp?
-O God! can I not save
-One from the pitiless wave?
-Is all that we see or seem
-But a dream within a dream?`,
-                background: 'One of Poe\'s most philosophical poems, it questions the nature of reality and our ability to distinguish between dreams and waking life.'
-            },
-            {
-                id: 'dont-quit',
-                title: 'Don\'t Quit',
-                author: 'John Greenleaf Whittier / Unknown',
-                year: 'Unknown',
-                text: `When things go wrong, as they sometimes will,
-When the road you're trudging seems all uphill,
-When the funds are low and the debts are high,
-And you want to smile, but you have to sigh,
-When care is pressing you down a bit,
-Rest, if you must, but don't you quit.
-
-Life is queer with its twists and turns,
-As every one of us sometimes learns,
-And many a failure turns about,
-When he might have won had he stuck it out;
-Don't give up though the pace seems slow—
-You may succeed with another blow.
-
-Success is failure turned inside out—
-The silver tint of the clouds of doubt,
-And you never can tell how close you are,
-It may be near when it seems so far;
-So stick to the fight when you're hardest hit—
-It's when things seem worst that you must not quit.`,
-                background: 'The authorship of this inspirational poem is disputed, sometimes attributed to Edgar A. Guest or John Greenleaf Whittier, but its exact origins remain unknown.'
-            },
-            {
-                id: 'it-couldnt-be-done',
-                title: 'It Couldn\'t Be Done',
-                author: 'Edgar Albert Guest',
-                year: '1917',
-                text: `Somebody said that it couldn't be done,
-But he with a chuckle replied
-That "maybe it couldn't," but he would be one
-Who wouldn't say so till he'd tried.
-So he buckled right in with the trace of a grin
-On his face. If he worried he hid it.
-He started to sing as he tackled the thing
-That couldn't be done, and he did it.
-
-Somebody scoffed: "Oh, you'll never do that;
-At least no one ever has done it";
-But he took off his coat and he took off his hat,
-And the first thing we knew he'd begun it.
-With a lift of his chin and a bit of a grin,
-Without any doubting or quiddit,
-He started to sing as he tackled the thing
-That couldn't be done, and he did it.
-
-There are thousands to tell you it cannot be done,
-There are thousands to prophesy failure;
-There are thousands to point out to you one by one,
-The dangers that wait to assail you.
-But just buckle in with a bit of a grin,
-Just take off your coat and go to it;
-Just start to sing as you tackle the thing
-That "cannot be done," and you'll do it.`,
-                background: 'Guest, known as "the people\'s poet," wrote this motivational poem during World War I, embodying the can-do spirit of the era.'
-            }
-        ];
-
-        // Generate Poem Cards for Collection Page
-        function generatePoemCards() {
-            const poemGrid = document.querySelector('.poem-grid');
-            
-            poems.forEach(poem => {
-                const card = document.createElement('div');
-                card.className = 'poem-card';
-                card.tabIndex = 0;
-                card.setAttribute('role', 'article');
-                card.setAttribute('aria-label', `${poem.title} by ${poem.author}`);
-                card.innerHTML = `
-                    <img src="https://source.unsplash.com/random/300x200/?${encodeURIComponent(poem.title.split(' ')[0])},poetry" alt="${poem.title} by ${poem.author}">
-                    <div class="poem-card-content">
-                        <h3>${poem.title}</h3>
-                        <p>${poem.author} (${poem.year})</p>
-                        <button class="btn read-poem-btn" data-poem="${poem.id}">Read Poem</button>
-                        <button class="btn poem-info-btn" data-poem="${poem.id}">About Poem</button>
-                    </div>
-                `;
-                
-                poemGrid.appendChild(card);
-            });
-
-            // Add event listeners to all read poem buttons
-            document.querySelectorAll('.read-poem-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showPoemDetail(btn.dataset.poem);
-                });
-            });
-
-            // Add event listeners to all poem info buttons
-            document.querySelectorAll('.poem-info-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showPoemInfo(btn.dataset.poem);
-                });
-            });
-        }
-
-        // Show Poem Detail
-        function showPoemDetail(poemId) {
-            const poem = poems.find(p => p.id === poemId);
-            if (!poem) return;
-            
-            const poemDetail = document.querySelector('.poem-detail');
-            poemDetail.innerHTML = `
-                <h1>${poem.title}</h1>
-                <h2>${poem.author} (${poem.year})</h2>
-                <div class="poem-text">${poem.text}</div>
-                <div class="poem-info">
-                    <h3>About This Poem</h3>
-                    <p>${poem.background}</p>
-                </div>
-                <div class="poem-tools">
-                    <button class="btn read-aloud-btn">Read Aloud</button>
-                    <button class="btn stop-reading-btn" style="display:none;">Stop Reading</button>
-                    <button onclick="showCollection()" class="btn">Back to Collection</button>
-                </div>
-            `;
-            
-            // Update breadcrumbs
-            document.querySelector('.breadcrumbs ol').innerHTML = `
-                <li><a href="index.html">Home</a></li>
-                <li><a href="collection.html">Collection</a></li>
-                <li aria-current="page">${poem.title}</li>
-            `;
-            
-            document.getElementById('collection-page').style.display = 'none';
-            document.getElementById('poem-detail-page').style.display = 'block';
-            
-            // Add event listeners for read aloud
-            const readAloudBtn = poemDetail.querySelector('.read-aloud-btn');
-            const stopReadingBtn = poemDetail.querySelector('.stop-reading-btn');
-            
-            readAloudBtn.addEventListener('click', () => {
-                const utterance = new SpeechSynthesisUtterance(poem.text);
-                utterance.rate = 0.9;
-                speechSynth.speak(utterance);
-                readAloudBtn.style.display = 'none';
-                stopReadingBtn.style.display = 'inline-block';
-            });
-            
-            stopReadingBtn.addEventListener('click', () => {
-                speechSynth.cancel();
-                stopReadingBtn.style.display = 'none';
-                readAloudBtn.style.display = 'inline-block';
-            });
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show Poem Info Modal
-        function showPoemInfo(poemId) {
-            const poem = poems.find(p => p.id === poemId);
-            if (!poem) return;
-            
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.setAttribute('role', 'dialog');
-            modal.setAttribute('aria-modal', 'true');
-            modal.setAttribute('aria-labelledby', 'modal-title');
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <button class="close-modal" aria-label="Close dialog">×</button>
-                    <h2 id="modal-title">About "${poem.title}"</h2>
-                    <p>${poem.background}</p>
-                    <button class="btn" onclick="showPoemDetail('${poem.id}')">Read Full Poem</button>
-                </div>
-            `;
-            document.body.appendChild(modal);
-            document.querySelector('.close-modal').focus();
-            
-            // Trap focus inside modal
-            trapFocus(modal);
-            
-            // Close modal
-            document.querySelector('.close-modal').addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            // Close on Escape key
-            document.addEventListener('keydown', function handleEscape(e) {
-                if (e.key === 'Escape') {
-                    modal.remove();
-                    document.removeEventListener('keydown', handleEscape);
-                }
-            });
-        }
-
-        // Show Collection
-        function showCollection() {
-            document.getElementById('collection-page').style.display = 'block';
-            document.getElementById('poem-detail-page').style.display = 'none';
-            
-            // Update breadcrumbs
-            document.querySelector('.breadcrumbs ol').innerHTML = `
-                <li><a href="index.html">Home</a></li>
-                <li aria-current="page">Collection</li>
-            `;
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Initialize based on URL
-        function initPage() {
-            const path = window.location.pathname;
-            const hash = window.location.hash.substr(1);
-            
-            if (path.includes('collection.html') || hash === 'collection') {
-                document.getElementById('collection-page').style.display = 'block';
-                document.querySelector('main > section:not(#collection-page)').style.display = 'none';
-                generatePoemCards();
-                
-                // Check if we're linking directly to a poem
-                const poemMatch = hash.match(/^poem-(.+)$/);
-                if (poemMatch) {
-                    showPoemDetail(poemMatch[1]);
-                }
-            } else if (hash === 'poem-detail') {
-                const poemId = new URLSearchParams(window.location.search).get('id');
-                if (poemId) {
-                    showPoemDetail(poemId);
-                }
-            }
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', initPage);
-
-        // Make functions available globally for navigation
-        window.showPoemDetail = showPoemDetail;
-        window.showCollection = showCollection;
-        window.showPoemInfo = showPoemInfo;
-    </script>
-</body>
-</html>
+Though wise men at their end
